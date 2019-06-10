@@ -1,5 +1,10 @@
 require 'rails_helper'
 
+# Test suite for the StudentCourse model
 RSpec.describe StudentCourse, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  # Association test
+  # ensure a student_course record belongs to a single student record
+  it { should belong_to(:student) }
+  # ensure a student_course record belongs to a single course record
+  it { should belong_to(:course) }
 end
