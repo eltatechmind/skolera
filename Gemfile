@@ -33,6 +33,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # rspec for testing
   gem 'rspec-rails'
+  # awesome print gem
+  gem 'awesome_print'
 end
 
 group :development do
