@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Teachers API', type: :request do
   # initialize test data 
-  let!(:teachers) { create_list(:teacher, 10, :admin) }
+  let!(:teachers) { create_list(:teacher, 10) }
    let(:teacher_id) { teachers.first.id }
 
   # Test suite for GET /teachers

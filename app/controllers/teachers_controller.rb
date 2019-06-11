@@ -33,7 +33,7 @@ class TeachersController < ApplicationController
 
   def teacher_params
     # whitelist params
-    params.permit(:name, :admin)
+    params.permit(:name)
   end
 
   def set_teacher
