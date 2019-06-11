@@ -35,6 +35,8 @@ group :development, :test do
   gem 'rspec-rails'
   # awesome print gem
   gem 'awesome_print'
+  # debugging
+  gem 'byebug'
 end
 
 group :development do
