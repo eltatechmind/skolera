@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_teacher
+  before_action :set_teacher, except: [:all_courses, :edit_course_teacher]
   before_action :set_teacher_course, only: [:show, :update, :destroy]
 
   # GET /teachers/:teacher_id/courses
@@ -30,10 +30,23 @@ class CoursesController < ApplicationController
     head :no_content
   end
 
+  # GET /teachers/allcourses  (to get all courses)
+  def all_courses
+    json_response(Course.all)
+  end
+
+  # PUT /teachers/editcourseteacher/:id
+  def edit_course_teacher
+    byebug
+    Course.find_by!(id: params[:id]).update(course_params)
+  end
+
+
+
   private
 
   def course_params
-    params.permit(:name)
+    params.permit(:name, :teacher_id)
   end
 
   def set_teacher
