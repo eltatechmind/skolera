@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :student do
-    name { Faker::Lorem.word }
+    name { Faker::Lorem.characters(20) }
   end
 end
