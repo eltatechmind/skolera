@@ -93,8 +93,8 @@ RSpec.describe 'Courses API' do
     before { put "/teachers/#{teacher_id}/courses/#{id}", params: valid_attributes }
 
     context 'when course exists' do
-      it 'returns status code 204' do
-        expect(response).to have_http_status(204)
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
       end
 
       it 'updates the course' do

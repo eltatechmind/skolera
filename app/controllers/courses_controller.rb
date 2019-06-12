@@ -18,10 +18,10 @@ class CoursesController < ApplicationController
     json_response(@teacher, :created)
   end
 
-  # PUT /teachers/:teacher_id/courses/:id
+  # PUT /teachers/:teacher_id/courses/:id (edit name only)
   def update
-    @course.update(course_params)
-    head :no_content
+    @course.update(name: params[:name])
+    json_response(@course)
   end
 
   # DELETE /teachers/:teacher_id/courses/:id
@@ -35,10 +35,10 @@ class CoursesController < ApplicationController
     json_response(Course.all)
   end
 
-  # PUT /teachers/editcourseteacher/:id
+  # PUT /editcourseteacher/:id (edit teacher_id only)
   def edit_course_teacher
-    byebug
-    Course.find_by!(id: params[:id]).update(course_params)
+    Course.find_by!(id: params[:id]).update(teacher_id: params[:teacher_id])
+    json_response(Course.find_by!(id: params[:id]))
   end
 
 
