@@ -28,7 +28,7 @@ RSpec.describe 'Teachers API', type: :request do
     it 'returns teachers' do
       # Note `json` is a custom helper to parse JSON responses
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(JSON.parse(response.body)["data"].count).to eq(10)
     end
 
     it 'returns status code 200' do
@@ -43,7 +43,7 @@ RSpec.describe 'Teachers API', type: :request do
     context 'when the record exists' do
       it 'returns the teacher' do
         expect(json).not_to be_empty
-        expect(json['id']).to eq(teacher_id)
+        expect(JSON.parse(response.body)["data"]["id"].to_i).to eq(teacher_id)
       end
 
       it 'returns status code 200' do
@@ -73,7 +73,7 @@ RSpec.describe 'Teachers API', type: :request do
       before { post '/teachers', params: valid_attributes, headers: @headers }
 
       it 'creates a teacher' do
-        expect(json['name']).to eq('Ahmed Fouad')
+        expect(JSON.parse(response.body)["data"]["attributes"]["name"]).to eq('Ahmed Fouad')
       end
 
       it 'returns status code 201' do

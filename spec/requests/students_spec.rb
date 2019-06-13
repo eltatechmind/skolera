@@ -28,7 +28,7 @@ RSpec.describe 'Students API', type: :request do
     it 'returns students' do
       # Note `json` is a custom helper to parse JSON responses
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(JSON.parse(response.body)["data"].count).to eq(10)
     end
 
     it 'returns status code 200' do
@@ -43,7 +43,7 @@ RSpec.describe 'Students API', type: :request do
     context 'when the record exists' do
       it 'returns the student' do
         expect(json).not_to be_empty
-        expect(json['id']).to eq(student_id)
+        expect(JSON.parse(response.body)["data"]["id"].to_i).to eq(student_id)
       end
 
       it 'returns status code 200' do
@@ -73,7 +73,7 @@ RSpec.describe 'Students API', type: :request do
       before { post '/students', params: valid_attributes, headers: @headers }
 
       it 'creates a student' do
-        expect(json['name']).to eq('Ahmed Fouad')
+        expect(JSON.parse(response.body)["data"]["attributes"]["name"]).to eq('Ahmed Fouad')
       end
 
       it 'returns status code 201' do

@@ -36,7 +36,7 @@ RSpec.describe 'StudentCourses API' do
       end
 
       it 'returns all student studentcourses' do
-        expect(json.size).to eq(3)
+        expect(JSON.parse(response.body)["data"].count).to eq(3)
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe 'StudentCourses API' do
       end
 
       it 'returns the studentcourse' do
-        expect(json['id']).to eq(id)
+        expect(JSON.parse(response.body)["data"]["id"].to_i).to eq(id)
       end
     end
 
