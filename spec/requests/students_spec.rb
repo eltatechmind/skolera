@@ -3,12 +3,27 @@ require 'rails_helper'
 RSpec.describe 'Students API', type: :request do
   # initialize test data 
   let!(:students) { create_list(:student, 10) }
-   let(:student_id) { students.first.id }
+  let(:student_id) { students.first.id }
+  let(:user) { create(:user) }
+  let(:params) do
+    {
+        email: user.email,
+        password: user.password
+    }
+  end
+  before do
+    post '/auth/sign_in', params: params
+    @headers = {
+        "access-token": response.headers["access-token"],
+        "uid": response.headers["uid"],
+        "client": response.headers["client"],
+      }
+  end
 
   # Test suite for GET /students
   describe 'GET /students' do
     # make HTTP get request before each example
-    before { get '/students' }
+    before { get '/students', headers: @headers }
 
     it 'returns students' do
       # Note `json` is a custom helper to parse JSON responses
@@ -23,7 +38,7 @@ RSpec.describe 'Students API', type: :request do
 
   # Test suite for GET /students/:id
   describe 'GET /students/:id' do
-    before { get "/students/#{student_id}" }
+    before { get "/students/#{student_id}", headers: @headers }
 
     context 'when the record exists' do
       it 'returns the student' do
@@ -55,7 +70,7 @@ RSpec.describe 'Students API', type: :request do
     let(:valid_attributes) { { name: 'Ahmed Fouad' } }
 
     context 'when the request is valid' do
-      before { post '/students', params: valid_attributes }
+      before { post '/students', params: valid_attributes, headers: @headers }
 
       it 'creates a student' do
         expect(json['name']).to eq('Ahmed Fouad')
@@ -67,7 +82,7 @@ RSpec.describe 'Students API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/students', params: { name: "" } }
+      before { post '/students', params: { name: "" }, headers: @headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -85,7 +100,7 @@ RSpec.describe 'Students API', type: :request do
     let(:valid_attributes) { { name: 'karim elsayed' } }
 
     context 'when the record exists' do
-      before { put "/students/#{student_id}", params: valid_attributes }
+      before { put "/students/#{student_id}", params: valid_attributes, headers: @headers }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -99,7 +114,7 @@ RSpec.describe 'Students API', type: :request do
 
   # Test suite for DELETE /students/:id
   describe 'DELETE /students/:id' do
-    before { delete "/students/#{student_id}" }
+    before { delete "/students/#{student_id}", headers: @headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

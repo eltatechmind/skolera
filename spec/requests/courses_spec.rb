@@ -6,10 +6,25 @@ RSpec.describe 'Courses API' do
   let!(:courses) { create_list(:course, 20, teacher_id: teacher.id) }
   let(:teacher_id) { teacher.id }
   let(:id) { courses.first.id }
+  let(:user) { create(:user) }
+  let(:params) do
+    {
+        email: user.email,
+        password: user.password
+    }
+  end
+  before do
+    post '/auth/sign_in', params: params
+    @headers = {
+        "access-token": response.headers["access-token"],
+        "uid": response.headers["uid"],
+        "client": response.headers["client"],
+      }
+  end
 
   # Test suite for GET /teachers/:teacher_id/courses
   describe 'GET /teachers/:teacher_id/courses' do
-    before { get "/teachers/#{teacher_id}/courses" }
+    before { get "/teachers/#{teacher_id}/courses", headers: @headers }
 
     context 'when teacher exists' do
       it 'returns status code 200' do
@@ -36,7 +51,7 @@ RSpec.describe 'Courses API' do
 
   # Test suite for GET /teachers/:teacher_id/courses/:id
   describe 'GET /teachers/:teacher_id/courses/:id' do
-    before { get "/teachers/#{teacher_id}/courses/#{id}" }
+    before { get "/teachers/#{teacher_id}/courses/#{id}", headers: @headers }
 
     context 'when teacher course exists' do
       it 'returns status code 200' do
@@ -66,7 +81,7 @@ RSpec.describe 'Courses API' do
     let(:valid_attributes) { { name: 'Math Five'} }
 
     context 'when request attributes are valid' do
-      before { post "/teachers/#{teacher_id}/courses", params: valid_attributes }
+      before { post "/teachers/#{teacher_id}/courses", params: valid_attributes, headers: @headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -74,7 +89,7 @@ RSpec.describe 'Courses API' do
     end
 
     context 'when an invalid request' do
-      before { post "/teachers/#{teacher_id}/courses", params: {} }
+      before { post "/teachers/#{teacher_id}/courses", params: {}, headers: @headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -90,7 +105,7 @@ RSpec.describe 'Courses API' do
   describe 'PUT /teachers/:teacher_id/courses/:id' do
     let(:valid_attributes) { { name: 'Math Seven' } }
 
-    before { put "/teachers/#{teacher_id}/courses/#{id}", params: valid_attributes }
+    before { put "/teachers/#{teacher_id}/courses/#{id}", params: valid_attributes, headers: @headers }
 
     context 'when course exists' do
       it 'returns status code 200' do
@@ -118,7 +133,7 @@ RSpec.describe 'Courses API' do
 
   # Test suite for DELETE /teachers/:teacher_id/courses/:id
   describe 'DELETE /teachers/:teacher_id/courses/:id' do
-    before { delete "/teachers/#{teacher_id}/courses/#{id}" }
+    before { delete "/teachers/#{teacher_id}/courses/#{id}", headers: @headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

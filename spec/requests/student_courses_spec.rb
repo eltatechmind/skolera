@@ -10,9 +10,25 @@ RSpec.describe 'StudentCourses API' do
   let!(:student_course3) { create(:student_course, student_id: student.id, course_id: courses.third.id) }
   let(:student_id) { student.id }
   let(:id) { StudentCourse.first.id }
+  let(:user) { create(:user) }
+  let(:params) do
+    {
+        email: user.email,
+        password: user.password
+    }
+  end
+  before do
+    post '/auth/sign_in', params: params
+    @headers = {
+        "access-token": response.headers["access-token"],
+        "uid": response.headers["uid"],
+        "client": response.headers["client"],
+      }
+  end
+
   # Test suite for GET /students/:student_id/student_courses
   describe 'GET /students/:student_id/student_courses' do
-    before { get "/students/#{student_id}/student_courses" }
+    before { get "/students/#{student_id}/student_courses", headers: @headers }
 
     context 'when student exists' do
       it 'returns status code 200' do
@@ -39,7 +55,7 @@ RSpec.describe 'StudentCourses API' do
 
   # Test suite for GET /students/:student_id/student_courses/:id
   describe 'GET /students/:student_id/student_courses/:id' do
-    before { get "/students/#{student_id}/student_courses/#{id}" }
+    before { get "/students/#{student_id}/student_courses/#{id}", headers: @headers }
 
     context 'when student studentcourse exists' do
       it 'returns status code 200' do
@@ -69,7 +85,7 @@ RSpec.describe 'StudentCourses API' do
     let(:valid_attributes) { { course_id: courses.last.id} }
 
     context 'when request attributes are valid' do
-      before { post "/students/#{student_id}/student_courses", params: valid_attributes }
+      before { post "/students/#{student_id}/student_courses", params: valid_attributes, headers: @headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -77,7 +93,7 @@ RSpec.describe 'StudentCourses API' do
     end
 
     context 'when an invalid request' do
-      before { post "/students/#{student_id}/student_courses", params: {} }
+      before { post "/students/#{student_id}/student_courses", params: {}, headers: @headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -93,7 +109,7 @@ RSpec.describe 'StudentCourses API' do
   describe 'PUT /students/:student_id/student_courses/:id' do
     let(:valid_attributes) { { course_id: courses.last.id} }
 
-    before { put "/students/#{student_id}/student_courses/#{id}", params: valid_attributes }
+    before { put "/students/#{student_id}/student_courses/#{id}", params: valid_attributes, headers: @headers }
 
     context 'when course exists' do
       it 'returns status code 200' do
@@ -121,7 +137,7 @@ RSpec.describe 'StudentCourses API' do
 
   # Test suite for DELETE /students/:student_id/student_courses/:id
   describe 'DELETE /students/:student_id/student_courses/:id' do
-    before { delete "/students/#{student_id}/student_courses/#{id}" }
+    before { delete "/students/#{student_id}/student_courses/#{id}", headers: @headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
