@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_teacher, except: [:all_courses, :edit_course_teacher]
   before_action :set_teacher_course, only: [:show, :update, :destroy]
 
