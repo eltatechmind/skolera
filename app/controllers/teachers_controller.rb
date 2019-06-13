@@ -30,6 +30,15 @@ class TeachersController < ApplicationController
     head :no_content
   end
 
+  # download teachers csv
+  def download_teachers
+    @teachers = Teacher.all
+
+    respond_to do |format|
+      format.html { send_data @teachers.to_csv, filename: "teachers-#{Date.today}.csv" }
+    end
+  end
+
   private
 
   def teacher_params

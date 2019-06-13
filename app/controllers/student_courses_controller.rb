@@ -1,6 +1,6 @@
 class StudentCoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_student, except: [:all_students_courses, :edit_course_student]
+  before_action :set_student, except: [:all_students_courses, :edit_course_student, :download_students_courses]
   before_action :set_student_studentcourse, only: [:show, :update, :destroy]
 
   # GET /students/:student_id/student_courses
@@ -40,6 +40,15 @@ class StudentCoursesController < ApplicationController
   # get /allstudentscourses (to get all students courses records)
   def all_students_courses
     json_response(StudentCourse.all)
+  end
+
+  # download students courses csv
+  def download_students_courses
+    @studentscourses = StudentCourse.all
+
+    respond_to do |format|
+      format.html { send_data @studentscourses.to_csv, filename: "students courses-#{Date.today}.csv" }
+    end
   end
 
   private

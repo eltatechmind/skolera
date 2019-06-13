@@ -25,9 +25,18 @@ class StudentsController < ApplicationController
   end
 
   # DELETE /students/:id
-  def destroy
+  def destroy 
     @student.destroy
     head :no_content
+  end
+
+  # download students csv
+  def download_students
+    @students = Student.all
+
+    respond_to do |format|
+      format.html { send_data @students.to_csv, filename: "students-#{Date.today}.csv" }
+    end
   end
 
   private
