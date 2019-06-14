@@ -32,16 +32,8 @@ class StudentsController < ApplicationController
 
   # create students csv
   def create_students_csv
-    @students = Student.all
-    csv = @students.to_csv
-
-    file = StringIO.new(csv)
-    foo = Studentcsv.new
-    foo.csv = file
-    foo.csv.instance_write(:content_type, 'text/csv')
-    foo.csv.instance_write(:file_name, "students-#{Date.today}.csv")
-    foo.save!
-    json_response("Student CSV File Created Successfully!, visit '/downloadstudents' endpoint.")
+    GenerateStudentsCsvJob.perform_later
+    json_response("Creating Students CSV file..., visit '/downloadstudents' endpoint and refresh.")
   end
 
   # download created students csvs (ordered by last created)
