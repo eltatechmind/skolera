@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  # create teachers csv
+  get '/createteacherscsv', to: 'teachers#create_teachers_csv'
   # download all teachers as csv
   get '/downloadteachers', to: 'teachers#download_teachers'
 
@@ -13,9 +15,13 @@ Rails.application.routes.draw do
   # download all students as csv
   get '/downloadstudents', to: 'students#download_students'
 
+  # create students_courses csv
+  get '/createstudentscoursescsv', to: 'student_courses#create_students_courses_csv'
   # download all studentscourses as csv
   get '/downloadstudentscourses', to: 'student_courses#download_students_courses'
 
+  # create courses csv
+  get '/createcoursescsv', to: 'courses#create_courses_csv'
   # download all courses as csv
   get '/downloadcourses', to: 'courses#download_courses'
 

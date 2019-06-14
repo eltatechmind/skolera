@@ -38,11 +38,11 @@ class StudentsController < ApplicationController
 
   # download created students csvs (ordered by last created)
   def download_students
-    @studentscsv = []
-    Studentcsv.all.order("created_at DESC").each do |record|
-      @studentscsv << request.base_url + record.csv.url
+    csv = []
+    Csv.where(kind: "students").order("created_at DESC").each do |record|
+      csv << request.base_url + record.csv.url
     end
-    json_response(@studentscsv)
+    json_response(csv)
   end
 
   private

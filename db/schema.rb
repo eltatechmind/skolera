@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_14_154012) do
+ActiveRecord::Schema.define(version: 2019_06_14_205256) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(version: 2019_06_14_154012) do
     t.datetime "updated_at", null: false
     t.integer "teacher_id"
     t.index ["teacher_id"], name: "index_courses_on_teacher_id"
+  end
+
+  create_table "csvs", force: :cascade do |t|
+    t.string "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "csv_file_name"
+    t.string "csv_content_type"
+    t.bigint "csv_file_size"
+    t.datetime "csv_updated_at"
   end
 
   create_table "student_courses", force: :cascade do |t|
@@ -28,15 +38,6 @@ ActiveRecord::Schema.define(version: 2019_06_14_154012) do
     t.index ["course_id"], name: "index_student_courses_on_course_id"
     t.index ["student_id", "course_id"], name: "index_student_courses_on_student_id_and_course_id", unique: true
     t.index ["student_id"], name: "index_student_courses_on_student_id"
-  end
-
-  create_table "studentcsvs", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "csv_file_name"
-    t.string "csv_content_type"
-    t.bigint "csv_file_size"
-    t.datetime "csv_updated_at"
   end
 
   create_table "students", force: :cascade do |t|
