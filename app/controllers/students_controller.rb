@@ -33,14 +33,14 @@ class StudentsController < ApplicationController
   # create students csv
   def create_students_csv
     GenerateStudentsCsvJob.perform_later
-    json_response("Creating Students CSV file..., visit '/downloadstudents' endpoint and refresh.")
+    json_response("Creating Students CSV file..., visit '../downloadstudents' endpoint and refresh.")
   end
 
   # download created students csvs (ordered by last created)
   def download_students
     @studentscsv = []
     Studentcsv.all.order("created_at DESC").each do |record|
-      @studentscsv << "http://www.localhost:3000#{record.csv.url}"
+      @studentscsv << request.base_url + record.csv.url
     end
     json_response(@studentscsv)
   end

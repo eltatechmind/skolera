@@ -214,6 +214,7 @@ DEPENDENCIES
   paperclip
   puma (~> 3.11)
   rails (~> 5.2.3)
+  redis
   rspec-rails
   shoulda-matchers
   sidekiq
