@@ -61,5 +61,23 @@ and here are some screenshots in sending requests for background jobs with heade
 
 ![alt text](https://res.cloudinary.com/elta3lab/image/upload/v1560637063/Screenshot_from_2019-06-16_00-17-23.png)
 
+### Development
 
+- to run api locally, clone the repo and run rails server and sidekiq.
+
+### Tesing
+
+- Rspec included for everything, models, requests, jobs, etc
+
+### production
+
+- everything working pretty the same for production, except that csv files can't be hosted ( needs AWS amazon S3 account which I don't have ), and only one job from the 4 is enabled (redis-to-go addon free plan), which is the students job with the 2 endpoints, one for creation of the csv and the other one for list all csv files urls
+
+### Others
+
+- Concerns, exception handling, rollbar installed.
+
+## Future Plans
+
+- Add Rubocop, circleci, and more
 
