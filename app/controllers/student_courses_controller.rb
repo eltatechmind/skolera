@@ -1,6 +1,6 @@
 class StudentCoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_student, except: [:all_students_courses, :edit_course_student, :download_students_courses]
+  before_action :set_student, except: [:all_students_courses, :edit_course_student, :download_students_courses, :create_students_courses_csv]
   before_action :set_student_studentcourse, only: [:show, :update, :destroy]
 
   # GET /students/:student_id/student_courses
@@ -42,13 +42,19 @@ class StudentCoursesController < ApplicationController
     json_response(StudentCourse.all)
   end
 
-  # download students courses csv
-  def download_students_courses
-    @studentscourses = StudentCourse.all
+  # create students_courses csv
+  def create_students_courses_csv
+    GenerateStudentsCoursesCsvJob.perform_later
+    json_response("Creating StudentsCourses CSV file..., visit '../downloadstudentscourses' endpoint and refresh.")
+  end
 
-    respond_to do |format|
-      format.html { send_data @studentscourses.to_csv, filename: "students courses-#{Date.today}.csv" }
+  # download created students_courses csvs (ordered by last created)
+  def download_students_courses
+    csv = []
+    Csv.where(kind: "students_courses").order("created_at DESC").each do |record|
+      csv << request.base_url + record.csv.url
     end
+    json_response(csv)
   end
 
   private
