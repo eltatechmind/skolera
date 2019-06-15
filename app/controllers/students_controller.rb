@@ -30,13 +30,19 @@ class StudentsController < ApplicationController
     head :no_content
   end
 
-  # download students csv
-  def download_students
-    @students = Student.all
+  # create students csv
+  def create_students_csv
+    GenerateStudentsCsvJob.perform_later
+    json_response("Creating Students CSV file..., visit '../downloadstudents' endpoint and refresh.")
+  end
 
-    respond_to do |format|
-      format.html { send_data @students.to_csv, filename: "students-#{Date.today}.csv" }
+  # download created students csvs (ordered by last created)
+  def download_students
+    csv = []
+    Csv.where(kind: "students").order("created_at DESC").each do |record|
+      csv << request.base_url + record.csv.url
     end
+    json_response(csv)
   end
 
   private

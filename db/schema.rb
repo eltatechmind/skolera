@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_13_015401) do
+ActiveRecord::Schema.define(version: 2019_06_14_205256) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(version: 2019_06_13_015401) do
     t.datetime "updated_at", null: false
     t.integer "teacher_id"
     t.index ["teacher_id"], name: "index_courses_on_teacher_id"
+  end
+
+  create_table "csvs", force: :cascade do |t|
+    t.string "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "csv_file_name"
+    t.string "csv_content_type"
+    t.bigint "csv_file_size"
+    t.datetime "csv_updated_at"
   end
 
   create_table "student_courses", force: :cascade do |t|
