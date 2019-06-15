@@ -73,6 +73,11 @@ and here are some screenshots in sending requests for background jobs with heade
 
 - everything working pretty the same for production, except that csv files can't be hosted ( needs AWS amazon S3 account which I don't have ), and only one job from the 4 is enabled (redis-to-go addon free plan), which is the students job with the 2 endpoints, one for creation of the csv and the other one for list all csv files urls
 
+- Root url on heroku: https://serene-mountain-76394.herokuapp.com
+- Endpoints for the workings students job (don't forget to sign-up, sign-in, add the 3 headers first !)
+https://serene-mountain-76394.herokuapp.com/downloadstudents
+https://serene-mountain-76394.herokuapp.com/createstudentscsv       
+
 ### Others
 
 - Concerns, exception handling, rollbar installed.
