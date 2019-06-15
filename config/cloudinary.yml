@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: elta3lab
+  api_key: '112162359837399'
+  api_secret: BzuGWdNBHjPqY8ZGjOEEr1VOcL8
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: elta3lab
+  api_key: '112162359837399'
+  api_secret: BzuGWdNBHjPqY8ZGjOEEr1VOcL8
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: elta3lab
+  api_key: '112162359837399'
+  api_secret: BzuGWdNBHjPqY8ZGjOEEr1VOcL8
+  enhance_image_tag: true
+  static_file_support: false
