@@ -11,8 +11,10 @@ module ExceptionHandler
       json_response({ message: e.message }, :unprocessable_entity)
     end
 
-    rescue_from StandardError do |e|
-      Rollbar.error(e)
+    if Rails.env.production?
+      rescue_from StandardError do |e|
+        Rollbar.error(e)
+      end
     end
   end
 end
