@@ -38,3 +38,28 @@
 but if you send the 3 key values headers, a response with serialized data using fastjsonapi will appear
 
 ![alt text](https://res.cloudinary.com/elta3lab/image/upload/v1560635897/Screenshot_from_2019-06-15_23-57-01.png)
+
+4) another endpoint for signing out, which will destroy the tokens we added before to the headers, now they are destroyed and you can't login or contact protected endpoints using them
+
+![alt text](https://res.cloudinary.com/elta3lab/image/upload/v1560636269/Screenshot_from_2019-06-16_00-02-56.png)
+
+### Background Jobs using sidekiq & redis server
+
+- every model data can be exported into a csv file, you visit an endpoint in order to create a csv using background job (request it for example 4 times), then visit another endpoint for downloading csv files and keep refreshing it til all csv files download urls appears (ordered by newer), go to any link of them and the csv will start downloading
+
+here are the endpoints used:
+
+![alt text](https://res.cloudinary.com/elta3lab/image/upload/v1560636608/Screenshot_from_2019-06-16_00-09-32.png)
+
+and here are some screenshots in sending requests for background jobs with headers from google chrome
+
+![alt text](https://res.cloudinary.com/elta3lab/image/upload/v1560636811/Screenshot_from_2019-06-16_00-13-07.png)
+
+![alt text](https://res.cloudinary.com/elta3lab/image/upload/v1560637016/Screenshot_from_2019-06-16_00-13-49.png)
+
+![alt text](https://res.cloudinary.com/elta3lab/image/upload/v1560637058/Screenshot_from_2019-06-16_00-17-11.png)
+
+![alt text](https://res.cloudinary.com/elta3lab/image/upload/v1560637063/Screenshot_from_2019-06-16_00-17-23.png)
+
+
+
