@@ -1,4 +1,5 @@
-GenerateTeachersCsvJob: bundle exec sidekiq -c 2
-GenerateStudentsCsvJob: bundle exec sidekiq -c 2
-GenerateStudentsCoursesCsvJob: bundle exec sidekiq -c 2
-GenerateCoursesCsvJob: bundle exec sidekiq -c 2
+web: bundle exec thin start -p $PORT
+GenerateTeachersCsvJob: bundle exec sidekiq -c 5 -v
+GenerateStudentsCsvJob: bundle exec sidekiq -c 5 -v
+GenerateStudentsCoursesCsvJob: bundle exec sidekiq -c 5 -v
+GenerateCoursesCsvJob: bundle exec sidekiq -c 5 -v
