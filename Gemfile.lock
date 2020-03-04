@@ -112,7 +112,7 @@ GEM
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
     pg (0.20.0)
-    puma (3.12.1)
+    puma (3.12.4)
     rack (2.0.7)
     rack-protection (2.0.5)
       rack
@@ -219,7 +219,7 @@ DEPENDENCIES
   oj
   paperclip
   pg (= 0.20.0)
-  puma (~> 3.11)
+  puma (~> 3.12)
   rails (~> 5.2.3)
   redis
   rollbar
